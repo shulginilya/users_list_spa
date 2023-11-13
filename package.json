@@ -50,6 +50,7 @@
 		"react-router-dom": "6.6.1",
 		"sanitize.css": "13.0.0",
 		"sass": "1.55.0",
+		"styled-components": "^6.1.1",
 		"typescript": "4.8.4",
 		"vite": "3.2.7"
 	},
