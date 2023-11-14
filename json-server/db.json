@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "name": "User 1",
+      "email": "user1@gmail.com",
+      "age": 19,
+      "address": "User 1 address",
+      "profilePicture": ""
+    },
+    {
+      "name": "User 2",
+      "email": "user2@gmail.com",
+      "age": 20,
+      "address": "User 2 address",
+      "profilePicture": ""
+    },
+    {
+      "name": "User 3",
+      "email": "user3@gmail.com",
+      "age": 21,
+      "address": "User 3 address",
+      "profilePicture": ""
+    },
+    {
+      "name": "User 4",
+      "email": "user4@gmail.com",
+      "age": 22,
+      "address": "User 4 address",
+      "profilePicture": ""
+    },
+    {
+      "name": "User 5",
+      "email": "user5@gmail.com",
+      "age": 23,
+      "address": "User 5 address",
+      "profilePicture": ""
+    }
+  ]
+}

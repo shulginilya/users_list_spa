@@ -1,18 +1,12 @@
 import {
     createSlice,
+    createAsyncThunk,
 } from "@reduxjs/toolkit";
 import { RootState } from "@/appStore/store";
 
-interface IUser {
-    name: string;
-    email: string;
-    age: number;
-};
+import { IUserDetails } from "@/types";
 
-interface IUserDetails extends IUser {
-    address: string;
-    profilePicture: string;
-}
+import { makeRequest } from "@/utils";
 
 /*
     We define state structure
@@ -35,12 +29,37 @@ const initialState: initialStateType = {
 };
 
 /*
+    We load plugins data from the server
+*/
+export const fetchPlugins = createAsyncThunk('users/fetchUsers', async () => {
+    const usersData = await makeRequest({
+        url: '/users'
+    });
+    return usersData;
+});
+
+/*
     Slice definition
 */
 export const usersSlice = createSlice({
     name: "users",
     initialState,
     reducers: {},
+    extraReducers(builder) {
+        builder
+            .addCase(fetchUsers.pending, (state) => {
+                state.status = Status.loading;
+            })
+            .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<IUserDetails[]>) => {
+                state.status = Status.succeeded;
+                const users = action.payload;
+                state.users = users;
+            })
+            .addCase(fetchUsers.rejected, (state) => {
+                state.status = Status.failed;
+                state.error = 'api error';
+            })
+    }
 });
 
 export const selectData = (state: RootState) => state.users;
