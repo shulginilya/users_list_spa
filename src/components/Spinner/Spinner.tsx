@@ -1,3 +1,3 @@
-export const Spinner: React.FC = () => (
+export const Spinner = (): JSX.Element => (
     <div data-testid="spinner_root">spinner</div>
 );

@@ -1,12 +1,12 @@
 import { Sidebar } from '@/components';
 
-interface IMain {
-    children: JSX.Element;
+interface IMainLayout {
+    children?: JSX.Element;
 };
 
-export const Main: React.FC = ({
+export const MainLayout = ({
     children
-}: IMain) => (
+}: IMainLayout): JSX.Element => (
     <div data-testid="main_layout_root">
         <div><Sidebar /></div>
         <div>{children}</div>

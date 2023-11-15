@@ -6,7 +6,7 @@ interface IMakeRequest {
     url: string;
     params?: {
         [key: string]: string
-    };
+    } | null;
     method?: MethodType;
 };
 
@@ -20,7 +20,7 @@ interface IOptions {
 
 export const makeRequest = async ({
     url,
-    params = {},
+    params = null,
     method = 'GET'
 }: IMakeRequest) => {
     const options: IOptions = {

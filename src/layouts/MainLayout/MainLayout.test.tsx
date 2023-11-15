@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 
-import { Main } from './Main';
+import { MainLayout } from './MainLayout';
 
 describe('Main Layout', () => {
     it('should render main layout', () => {
-        render(<Main />);
+        render(<MainLayout />);
         const mainLayoutWrapper = screen.getByTestId('main_layout_root');
         expect(mainLayoutWrapper).toBeInTheDocument();
     });

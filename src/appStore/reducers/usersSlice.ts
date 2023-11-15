@@ -1,6 +1,7 @@
 import {
     createSlice,
     createAsyncThunk,
+    PayloadAction,
 } from "@reduxjs/toolkit";
 import { RootState } from "@/appStore/store";
 
@@ -18,12 +19,14 @@ export enum Status {
     failed = 'failed'
 };
 interface initialStateType {
-    data: IUserDetails[],
+    users: IUserDetails[],
+    currentPage: number,
     status: Status.idle | Status.loading | Status.succeeded | Status.failed,
     error: string | null;
 };
 const initialState: initialStateType = {
-    data: [],
+    users: [],
+    currentPage: 1,
     status: Status.idle,
     error: null
 };
@@ -31,7 +34,7 @@ const initialState: initialStateType = {
 /*
     We load plugins data from the server
 */
-export const fetchPlugins = createAsyncThunk('users/fetchUsers', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
     const usersData = await makeRequest({
         url: '/users'
     });
@@ -42,7 +45,7 @@ export const fetchPlugins = createAsyncThunk('users/fetchUsers', async () => {
     Slice definition
 */
 export const usersSlice = createSlice({
-    name: "users",
+    name: "usersSlice",
     initialState,
     reducers: {},
     extraReducers(builder) {
@@ -62,6 +65,6 @@ export const usersSlice = createSlice({
     }
 });
 
-export const selectData = (state: RootState) => state.users;
+export const selectData = (state: RootState) => state.usersSlice;
 
 export default usersSlice.reducer;

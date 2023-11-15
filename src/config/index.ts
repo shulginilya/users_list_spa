@@ -1,7 +1,15 @@
-interface CommonConfigType {
+interface ICommonConfig {
     apiEndpoint: string;
 };
 
-export const commonConfig: CommonConfigType = {
+interface IUserTableConfig {
+    usersPerPage: number;
+};
+
+export const commonConfig: ICommonConfig = {
     apiEndpoint: 'http://localhost:3000'
+};
+
+export const usersTableConfig: IUserTableConfig = {
+    usersPerPage: 10
 };
