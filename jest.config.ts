@@ -9,6 +9,7 @@ const config: Config = {
     modulePaths: ['<rootDir>/src'],
     moduleNameMapper: {
         '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+        "^@/(.*)$": "<rootDir>/src/$1",
     },
     moduleFileExtensions: ['js', 'ts', 'tsx', 'json', 'jsx', 'node'],
     resetMocks: true,

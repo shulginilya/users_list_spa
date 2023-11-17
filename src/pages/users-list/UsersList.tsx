@@ -1,9 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
 
-import { Table } from '@/components';
+import { Table, ITableItem, ITableColumn } from '@/components';
 
 import { MainLayout } from "@/layouts";
+
+import { IUserDetails } from '@/types';
 
 import {
 	selectData,
@@ -36,16 +38,23 @@ export const UsersList = (): JSX.Element => {
             return null;
         }
         const entryUser = users[0];
-        const tableColumns = entryUser ? Object.keys(entryUser).map((key) => {
+        const tableColumns: ITableColumn[] = entryUser ? Object.keys(entryUser).map((key) => {
             return {
                 key: `user_table_header_${key}`,
                 name: key,
                 title: key,
             }
         }) : [];
-        const tableItems = useMemo(() => ([]), []);
+        const tableItems: ITableItem[][] = users.map((user: IUserDetails) => {
+            const tblItem = Object.keys(user).map(k => ({
+                key: k,
+                value: user[k as keyof typeof user]
+            }));
+            return tblItem;
+        });
         return (
             <Table
+                resourseName="users"
                 columns={tableColumns}
                 items={tableItems}
             />
@@ -56,7 +65,7 @@ export const UsersList = (): JSX.Element => {
         <div data-testid="users_list_root">
             {usersTable}
         </div>
-    ), []);
+    ), [status]);
     
     return (
         <MainLayout>

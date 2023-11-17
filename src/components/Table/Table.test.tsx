@@ -1,11 +1,18 @@
 import { render, screen } from '@testing-library/react';
 
-import { Table } from './Table';
+import { Table } from '@/components';
+import { emptyTableTestProps, filledTableTestProps } from './Table.data';
 
 describe('Table', () => {
+    it('should not render empty table', () => {
+        render(<Table {...emptyTableTestProps} />);
+        const tableElement = screen.getByTestId(emptyTableTestProps.dataTestId);
+        expect(tableElement).toBeInTheDocument();
+    });
+
     it('should render table', () => {
-        render(<Table />);
-        const tableWrapper = screen.getByTestId('table_root');
-        expect(tableWrapper).toBeInTheDocument();
+        render(<Table {...filledTableTestProps} />);
+        const tableElement = screen.getByTestId(filledTableTestProps.dataTestId);
+        expect(tableElement).toBeInTheDocument();
     });
 });

@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 export const Sidebar = (): JSX.Element => (
     <div data-testid="sidebar_root">
-        <ul>
+        {/* <ul>
             <li>
                 <Link
                     to='/'
@@ -17,6 +17,6 @@ export const Sidebar = (): JSX.Element => (
                     Users List
                 </Link>
             </li>
-        </ul>
+        </ul> */}
     </div>
 );

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { UserDetails } from './UserDetails';
+import { UserDetails } from '@/pages';
 
 describe('User Details', () => {
     it('should render the page', () => {

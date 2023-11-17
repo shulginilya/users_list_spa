@@ -1,32 +1,42 @@
 import { useMemo } from 'react';
 
-import { ITable } from '@/components';
+import { ITable, ITableItem } from '@/components';
 
 export const Table = ({
+    resourseName,
     columns,
     items,
     dataTestId,
 }: ITable): JSX.Element | null => {
-    if (items.length === 0) {
-        return null;
-    }
+    // build table headers
     const renderTableHeader = useMemo(() => (
         columns.map(column => (
             <th key={column.key}>
                 {column.onRender ? column.onRender() : column.title}
             </th>
         ))
-    ), []);
+    ), [columns]);
+    // build table rows
     const renderTableBody = useMemo(() => (
-        items.map(item => (
-            <td key={item.key}>
-                {item.onRender ? item.onRender() : item.value}
-            </td>
-        ))
-    ), []);
+        items.map((tblRowData: ITableItem[], key: number) => {
+            const tblRowKey = `${resourseName}_tbl_row_${key}`;
+            const generateTblCells = () => (
+                tblRowData.map((tblCellData: ITableItem) => {
+                    return (
+                        <td key={`${tblRowKey}_cell_${tblCellData.key}`}>
+                            {tblCellData.value}
+                        </td>
+                    )
+                })
+            );
+            return (
+                <tr key={tblRowKey}>{generateTblCells()}</tr>
+            )
+        })
+    ), [items]);
     return (
-        <div data-testid="table_root">
-            <table test-id={dataTestId || ''}>
+        <div>
+            <table data-testid={dataTestId || ''}>
                 <thead>
                     <tr>
                         {renderTableHeader}

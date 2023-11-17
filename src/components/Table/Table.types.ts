@@ -12,7 +12,8 @@ export interface ITableItem {
 };
 
 export interface ITable {
+    resourseName: string;
     columns: ITableColumn[];
-    items: ITableItem[];
+    items: ITableItem[][];
     dataTestId?: string; 
 };

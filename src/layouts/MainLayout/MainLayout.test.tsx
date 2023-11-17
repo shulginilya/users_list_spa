@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { MainLayout } from './MainLayout';
+import { MainLayout } from '@/layouts';
 
 describe('Main Layout', () => {
     it('should render main layout', () => {
