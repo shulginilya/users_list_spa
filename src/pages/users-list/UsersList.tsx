@@ -12,8 +12,10 @@ import {
 	fetchUsers,
 	Status
 } from "@/appStore/reducers/usersSlice";
+import { useNavigate } from "react-router-dom";
 
 export const UsersList = (): JSX.Element => {
+    const navigate = useNavigate();
     /*
         Retrieve data from the users slice
     */
@@ -28,28 +30,46 @@ export const UsersList = (): JSX.Element => {
         Load users from the server
     */
     useEffect(() => {
-		if (status === Status.idle) {
-			dispatch(fetchUsers());
-		}
-	}, [status, dispatch]);
+		dispatch(fetchUsers());
+	}, []);
 
     const usersTable = useMemo(() => {
         if (status !== Status.succeeded) {
             return null;
         }
+        const excludedColumns = [
+            'id',
+            'address',
+            'profilePicture'
+        ];
         const entryUser = users[0];
-        const tableColumns: ITableColumn[] = entryUser ? Object.keys(entryUser).map((key) => {
+        const defaultTableColumns: ITableColumn[] = entryUser ? Object.keys(entryUser).map((key) => {
             return {
-                key: `user_table_header_${key}`,
+                key,
                 name: key,
                 title: key,
             }
         }) : [];
+        const extraTableColumns = [
+            {
+                key: 'action',
+                name: '',
+                title: ''
+            }
+        ];
+        const tableColumns = [ ...defaultTableColumns, ...extraTableColumns];
         const tableItems: ITableItem[][] = users.map((user: IUserDetails) => {
-            const tblItem = Object.keys(user).map(k => ({
+            const tblItem: ITableItem[] = Object.keys(user).map(k => ({
                 key: k,
                 value: user[k as keyof typeof user]
             }));
+            tblItem.push({
+                key: 'action',
+                value: '',
+                onRender: () => (
+                    <button onClick={() => navigate(`/users/${user.id}`)}>details</button>
+                )
+            });
             return tblItem;
         });
         return (
@@ -57,6 +77,7 @@ export const UsersList = (): JSX.Element => {
                 resourseName="users"
                 columns={tableColumns}
                 items={tableItems}
+                excludedColumns={excludedColumns}
             />
         )
     }, [status]);

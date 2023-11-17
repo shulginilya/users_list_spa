@@ -20,25 +20,40 @@ export enum Status {
 };
 interface initialStateType {
     users: IUserDetails[],
+    user: IUserDetails | null,
     currentPage: number,
     status: Status.idle | Status.loading | Status.succeeded | Status.failed,
     error: string | null;
 };
 const initialState: initialStateType = {
     users: [],
+    user: null,
     currentPage: 1,
     status: Status.idle,
     error: null
 };
 
 /*
-    We load plugins data from the server
+    Load users data from the server
 */
 export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
     const usersData = await makeRequest({
         url: '/users'
     });
     return usersData;
+});
+
+/*
+    Load user by his id
+*/
+export const fetchUser = createAsyncThunk('users/fetchUser', async (id: string | undefined) => {
+    if (!id) {
+        return null;
+    }
+    const userData = await makeRequest({
+        url: `/users/${id}`
+    });
+    return userData;
 });
 
 /*
@@ -59,6 +74,18 @@ export const usersSlice = createSlice({
                 state.users = users;
             })
             .addCase(fetchUsers.rejected, (state) => {
+                state.status = Status.failed;
+                state.error = 'api error';
+            })
+            .addCase(fetchUser.pending, (state) => {
+                state.status = Status.loading;
+            })
+            .addCase(fetchUser.fulfilled, (state, action: PayloadAction<IUserDetails>) => {
+                state.status = Status.succeeded;
+                const user = action.payload;
+                state.user = user;
+            })
+            .addCase(fetchUser.rejected, (state) => {
                 state.status = Status.failed;
                 state.error = 'api error';
             })

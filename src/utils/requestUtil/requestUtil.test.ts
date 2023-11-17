@@ -6,6 +6,6 @@ describe('makeRequest', () => {
         const testResponse = await makeRequest({
             url: '/users'
         });
-        expect(testResponse[0]).toBe(testUser);
+        expect(testResponse[0]).toStrictEqual(testUser);
     });
 });

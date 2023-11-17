@@ -15,5 +15,6 @@ export interface ITable {
     resourseName: string;
     columns: ITableColumn[];
     items: ITableItem[][];
-    dataTestId?: string; 
+    dataTestId?: string;
+    excludedColumns?: string[];
 };

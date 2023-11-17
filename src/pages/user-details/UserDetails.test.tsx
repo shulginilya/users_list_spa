@@ -4,7 +4,14 @@ import { UserDetails } from '@/pages';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
-    useNavigate: () => jest.fn()
+    useNavigate: () => jest.fn(),
+    useParams: () => jest.fn()
+}));
+
+jest.mock('@/appStore/hooks', () => ({
+    ...jest.requireActual('@/appStore/hooks'),
+    useAppDispatch: () => jest.fn(),    
+    useAppSelector: () => jest.fn()
 }));
 
 describe('User Details', () => {
