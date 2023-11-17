@@ -1,22 +1,18 @@
-// import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export const Sidebar = (): JSX.Element => (
-    <div data-testid="sidebar_root">
-        {/* <ul>
-            <li>
-                <Link
-                    to='/'
-                >
-                    Home
-                </Link>
-            </li>
-            <li>
-                <Link
-                    to='/users'
-                >
-                    Users List
-                </Link>
-            </li>
-        </ul> */}
-    </div>
-);
+export const Sidebar = (): JSX.Element => {
+    const navigate = useNavigate();
+
+    return (
+        <div data-testid="sidebar_root">
+            <ul>
+                <li>
+                    <button onClick={() => navigate('/')}>Home</button>
+                </li>
+                <li>
+                    <button onClick={() => navigate('/users')}>Users List</button>
+                </li>
+            </ul>
+        </div>
+    )
+};

@@ -2,9 +2,14 @@ import { render, screen } from '@testing-library/react';
 
 import { UsersList } from '@/pages';
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => jest.fn()
+}));
+
 jest.mock('@/appStore/hooks', () => ({
     ...jest.requireActual('@/appStore/hooks'),
-    useAppDispatch: () => jest.fn(),
+    useAppDispatch: () => jest.fn(),    
     useAppSelector: () => jest.fn()
 }));
 

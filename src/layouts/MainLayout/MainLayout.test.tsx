@@ -2,6 +2,11 @@ import { render, screen } from '@testing-library/react';
 
 import { MainLayout } from '@/layouts';
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => jest.fn()
+}));
+
 describe('Main Layout', () => {
     it('should render main layout', () => {
         render(<MainLayout />);
