@@ -1,8 +1,12 @@
 export interface ITableColumn {
     key: string;
     name: string;
-    title: string;
+    title?: string;
     onRender?: () => JSX.Element;
+};
+
+export interface ITableColumnExtra {
+    title: string;
 };
 
 export interface ITableItem {
@@ -17,4 +21,7 @@ export interface ITable {
     items: ITableItem[][];
     dataTestId?: string;
     excludedColumns?: string[];
+    tableColumnsMapping?: {
+        [key: string]: ITableColumnExtra
+    }
 };

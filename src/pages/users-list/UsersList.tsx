@@ -42,19 +42,28 @@ export const UsersList = (): JSX.Element => {
             'address',
             'profilePicture'
         ];
+        const tableColumnsMapping = {
+            name: {
+                title: 'Name'
+            },
+            email: {
+                title: 'Email'
+            },
+            age: {
+                title: 'Age'
+            }
+        };
         const entryUser = users[0];
         const defaultTableColumns: ITableColumn[] = entryUser ? Object.keys(entryUser).map((key) => {
             return {
                 key,
                 name: key,
-                title: key,
             }
         }) : [];
         const extraTableColumns = [
             {
                 key: 'action',
                 name: '',
-                title: ''
             }
         ];
         const tableColumns = [ ...defaultTableColumns, ...extraTableColumns];
@@ -78,6 +87,7 @@ export const UsersList = (): JSX.Element => {
                 columns={tableColumns}
                 items={tableItems}
                 excludedColumns={excludedColumns}
+                tableColumnsMapping={tableColumnsMapping}
             />
         )
     }, [status]);
