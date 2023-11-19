@@ -79,6 +79,7 @@ export const usersSlice = createSlice({
             })
             .addCase(fetchUser.pending, (state) => {
                 state.status = Status.loading;
+                state.user = null;
             })
             .addCase(fetchUser.fulfilled, (state, action: PayloadAction<IUserDetails>) => {
                 state.status = Status.succeeded;

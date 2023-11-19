@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
 
-import { ITable, ITableItem, ITableColumn } from '@/components';
+import {
+    ITable,
+    ITableItem,
+    ITableColumn,
+} from './Table.types';
 
 export const Table = ({
     resourseName,

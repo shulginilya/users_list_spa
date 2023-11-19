@@ -1,4 +1,5 @@
 import { MainLayout } from "@/layouts";
+import { ResourceDetails } from "@/components";
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,35 +14,30 @@ export const UserDetails = (): JSX.Element => {
     const { id } = useParams();
 
     const dispatch = useAppDispatch();
-    const {
-		user,
-		status
-	} = useAppSelector(selectData);
+    const { user } = useAppSelector(selectData);
 
     useEffect(() => {
 		dispatch(fetchUser(id));
 	}, [id]);
 
-    const renderUserDetailsPanel = useMemo(() => (
-        <div>
-            {
-                user ? (
-                    Object.keys(user).map(key => (
-                        <div>
-                            <div>{key}</div>
-                            <div>{user[key as keyof typeof user]}</div>
-                        </div>
-                    ))
-                ) : (
-                    <></>
-                )
-            }
-        </div>
-    ), [status]);
+    const userDetailsProps = useMemo(() => ({
+        name: "user_details",
+        entity: user,
+        fieldsMapping: {
+            name: 'Name',
+            email: 'E-Mail',
+            age: 'Age',
+            address: 'Address',
+            profilePicture: 'Profile Picture'
+        },
+        excludedFields: [
+            'id'
+        ]
+    }), [user]);
 
     const componentRender = useMemo((): JSX.Element => (
         <div data-testid="user_details_root">
-            {renderUserDetailsPanel}
+            <ResourceDetails { ...userDetailsProps } />
             <div>
                 <button
                     data-testid="user_details_back_button"
@@ -49,7 +45,7 @@ export const UserDetails = (): JSX.Element => {
                 >go back</button>
             </div>
         </div>
-    ), [status]);
+    ), [user]);
 
     return (
         <MainLayout>
