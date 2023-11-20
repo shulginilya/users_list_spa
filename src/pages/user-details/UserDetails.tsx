@@ -3,11 +3,12 @@ import { ResourceDetails } from "@/components";
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
 import { useNavigate, useParams } from "react-router-dom";
-
 import {
 	selectData,
 	fetchUser,
 } from "@/appStore/reducers/usersSlice";
+
+import styles from './user_details.module.scss';
 
 export const UserDetails = (): JSX.Element => {
     const navigate = useNavigate();
@@ -36,7 +37,10 @@ export const UserDetails = (): JSX.Element => {
     }), [user]);
 
     const componentRender = useMemo((): JSX.Element => (
-        <div data-testid="user_details_root">
+        <div
+            className={styles.user_details}
+            data-testid="user_details_root"
+        >
             <ResourceDetails { ...userDetailsProps } />
             <div>
                 <button

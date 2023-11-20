@@ -1,18 +1,16 @@
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
-
 import { Table, ITableItem, ITableColumn } from '@/components';
-
 import { MainLayout } from "@/layouts";
-
 import { IUserDetails } from '@/types';
-
 import {
 	selectData,
 	fetchUsers,
 	Status
 } from "@/appStore/reducers/usersSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import styles from './user_list.module.scss';
 
 export const UsersList = (): JSX.Element => {
     const navigate = useNavigate();
@@ -76,7 +74,8 @@ export const UsersList = (): JSX.Element => {
                 key: 'action',
                 value: '',
                 onRender: () => (
-                    <button onClick={() => navigate(`/users/${user.id}`)}>details</button>
+                    <Link to={`/users/${user.id}`}>details</Link>
+                    // <button onClick={() => navigate(`/users/${user.id}`)}>details</button>
                 )
             });
             return tblItem;
@@ -93,7 +92,10 @@ export const UsersList = (): JSX.Element => {
     }, [status]);
 
     const componentRender = useMemo((): JSX.Element => (
-        <div data-testid="users_list_root">
+        <div
+            className={styles.user_list}
+            data-testid="users_list_root"
+        >
             {usersTable}
         </div>
     ), [status]);

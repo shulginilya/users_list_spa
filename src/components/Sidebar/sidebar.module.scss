@@ -1,0 +1,35 @@
+@use '@/styles/variables' as *;
+
+@mixin active_link {
+    opacity: 1;
+}
+
+.sidebar {
+    padding: 10px 15px;
+    &__list {
+        &__item {
+            margin-bottom: 10px;
+            &__link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 35px;
+                width: 100%;
+                color: $white;
+                text-decoration: none;
+                background-color: $blue;
+                border-radius: 4px;
+                opacity: .5;
+                font-size: 14px;
+                font-weight: bold;
+                cursor: pointer;
+                &:hover {
+                    @include active_link();
+                }
+            }
+            &:last-child {
+                margin-bottom: 0px;
+            }
+        }
+    }
+}

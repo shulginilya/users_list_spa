@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { MainLayout } from '@/layouts';
+import { MainLayout } from './MainLayout';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

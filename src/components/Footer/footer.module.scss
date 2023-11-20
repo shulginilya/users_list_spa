@@ -1,0 +1,12 @@
+@use '@/styles/variables' as *;
+
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: $footer-height;
+    padding: 10px 15px;
+    font-weight: bold;
+    text-align: right;
+    font-size: 12px;
+}

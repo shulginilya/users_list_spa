@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { UserDetails } from '@/pages';
+import { UserDetails } from './UserDetails';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

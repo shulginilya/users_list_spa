@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { Table } from '@/components';
+import { Table } from './Table';
 import { emptyTableTestProps, filledTableTestProps } from './Table.data';
 
 describe('Table', () => {

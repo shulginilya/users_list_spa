@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { Sidebar } from '@/components';
+import { Sidebar } from './Sidebar';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

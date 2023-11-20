@@ -6,6 +6,8 @@ import {
     ITableColumn,
 } from './Table.types';
 
+import styles from './table.module.scss';
+
 export const Table = ({
     resourseName,
     columns,
@@ -54,7 +56,7 @@ export const Table = ({
         })
     ), [items]);
     return (
-        <div>
+        <div className={styles.table}>
             <table data-testid={dataTestId || ''}>
                 <thead>
                     <tr>

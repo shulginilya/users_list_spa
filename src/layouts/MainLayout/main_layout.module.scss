@@ -1,0 +1,24 @@
+@use '@/styles/variables' as *;
+
+.main_layout {
+    display: block;
+    height: calc(100% - $footer-height - $header-height);
+
+    @media (min-width: $min-screen-xxs) {
+        display: flex;
+    }
+
+    &__navi {
+        position: relative;
+        width: 100%;
+        background-color: $grey;
+        flex: 0 0 auto;
+        @media (min-width: $min-screen-xxs) {
+            width: 260px;
+        }
+    }
+    &__content {
+        flex: 1 1 auto;
+        padding: 10px 15px;
+    }
+}

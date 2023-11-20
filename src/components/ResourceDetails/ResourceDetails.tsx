@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import { IResourceDetilsProps } from './ResourceDetails.types';
 
+import styles from './resource_details.module.scss';
+
 export const ResourceDetails = ({
     name,
     entity,
@@ -24,7 +26,10 @@ export const ResourceDetails = ({
             );
         }).filter(k=> k !== null);
         return (
-            <div data-testid="resource_details_root">{resourceDataRows}</div>
+            <div
+                className={styles.resource_details}
+                data-testid="resource_details_root"
+            >{resourceDataRows}</div>
         );
     }, []);
     return (

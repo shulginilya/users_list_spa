@@ -1,0 +1,9 @@
+@use '@/styles/variables' as *;
+
+.header {
+    display: flex;
+    align-items: center;
+    height: $header-height;
+    padding: 0 15px;
+    font-weight: bold;
+}
