@@ -1,9 +1,12 @@
+// import * as toolkitRaw from '@reduxjs/toolkit';
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import usersReducer from "@/appStore/reducers/usersSlice";
+import themeReducer from "@/appStore/reducers/themeSlice";
 
 export const store = configureStore({
     reducer: {
         usersSlice: usersReducer,
+        themeSlice: themeReducer,
     },
 });
 

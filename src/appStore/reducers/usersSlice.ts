@@ -3,6 +3,7 @@ import {
     createAsyncThunk,
     PayloadAction,
 } from "@reduxjs/toolkit";
+
 import { RootState } from "@/appStore/store";
 
 import { IUserDetails } from "@/types";
