@@ -57,7 +57,10 @@ export const Table = ({
     ), [items]);
     return (
         <div className={styles.table}>
-            <table data-testid={dataTestId || ''}>
+            <table
+                className={styles.table}
+                data-testid={dataTestId || ''}
+            >
                 <thead>
                     <tr>
                         {renderTableHeader}

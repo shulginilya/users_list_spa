@@ -11,7 +11,6 @@ export const Home = (): JSX.Element => {
             className={styles.home}
             data-testid="homepage_root"
         >
-            homepage
         </div>
     ), []);
 
