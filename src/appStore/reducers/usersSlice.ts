@@ -8,7 +8,7 @@ import { RootState } from "@/appStore/store";
 
 import { IUserDetails } from "@/types";
 
-import { makeRequest } from "@/utils";
+import { makeRequest, getRecordsCount } from "@/utils";
 
 /*
     We define state structure
@@ -22,14 +22,14 @@ export enum Status {
 interface initialStateType {
     users: IUserDetails[],
     user: IUserDetails | null,
-    currentPage: number,
+    usersCount: number | null;
     status: Status.idle | Status.loading | Status.succeeded | Status.failed,
     error: string | null;
 };
 const initialState: initialStateType = {
     users: [],
     user: null,
-    currentPage: 1,
+    usersCount: null,
     status: Status.idle,
     error: null
 };
@@ -56,6 +56,14 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (id: string |
     });
     return userData;
 });
+
+export const fetchUsersCount = createAsyncThunk('users/fetchUsersCount', async () => {
+    const usersCount = await getRecordsCount({
+        url: '/users'
+    });
+    return usersCount;
+});
+
 
 /*
     Slice definition
@@ -88,6 +96,15 @@ export const usersSlice = createSlice({
                 state.user = user;
             })
             .addCase(fetchUser.rejected, (state) => {
+                state.status = Status.failed;
+                state.error = 'api error';
+            })
+            .addCase(fetchUsersCount.fulfilled, (state, action: PayloadAction<number | null>) => {
+                state.status = Status.succeeded;
+                const usersCount = action.payload;
+                state.usersCount = usersCount;
+            })
+            .addCase(fetchUsersCount.rejected, (state) => {
                 state.status = Status.failed;
                 state.error = 'api error';
             })

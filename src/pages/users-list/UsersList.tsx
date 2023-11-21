@@ -1,35 +1,45 @@
 import { useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
-import { Table, ITableItem, ITableColumn } from '@/components';
+import {
+    Table,
+    Pagination,
+} from '@/components';
+import type { ITableItem, ITableColumn } from '@/components';
 import { MainLayout } from "@/layouts";
 import { IUserDetails } from '@/types';
+import { usersTableConfig } from '@/config';
 import {
 	selectData,
 	fetchUsers,
+    fetchUsersCount,
 	Status
 } from "@/appStore/reducers/usersSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import styles from './user_list.module.scss';
 
 export const UsersList = (): JSX.Element => {
     const navigate = useNavigate();
+    const { page } = useParams();
+    const currentPage = page ? parseInt(page, 10) : 1;
+
     /*
         Retrieve data from the users slice
     */
     const dispatch = useAppDispatch();
     const {
 		users,
-        currentPage,
-		status
+		status,
+        usersCount
 	} = useAppSelector(selectData);
     
     /*
         Load users from the server
     */
     useEffect(() => {
+        dispatch(fetchUsersCount());
 		dispatch(fetchUsers());
-	}, []);
+	}, [page]);
 
     const usersTable = useMemo(() => {
         if (status !== Status.succeeded) {
@@ -74,8 +84,7 @@ export const UsersList = (): JSX.Element => {
                 key: 'action',
                 value: '',
                 onRender: () => (
-                    <Link to={`/users/${user.id}`}>details</Link>
-                    // <button onClick={() => navigate(`/users/${user.id}`)}>details</button>
+                    <button onClick={() => navigate(`/users/details/${user.id}`)}>details</button>
                 )
             });
             return tblItem;
@@ -89,20 +98,24 @@ export const UsersList = (): JSX.Element => {
                 tableColumnsMapping={tableColumnsMapping}
             />
         )
-    }, [status]);
+    }, [status, users]);
 
-    const componentRender = useMemo((): JSX.Element => (
-        <div
-            className={styles.user_list}
-            data-testid="users_list_root"
-        >
-            {usersTable}
-        </div>
-    ), [status]);
+    const paginationProps = useMemo(() => ({
+        currentPage,
+        recordsCount: usersCount,
+        recordsPerPage: usersTableConfig.usersPerPage,
+        url: '/users'
+    }), [usersCount]);
     
     return (
         <MainLayout>
-            {componentRender}
+            <div
+                className={styles.user_list}
+                data-testid="users_list_root"
+            >
+                {usersTable}
+                <Pagination { ...paginationProps } />
+            </div>
         </MainLayout>
     )
 };

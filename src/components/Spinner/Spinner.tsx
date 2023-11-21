@@ -4,5 +4,7 @@ export const Spinner = (): JSX.Element => (
     <div
         className={styles.spinner}
         data-testid="spinner_root"
-    >spinner</div>
+    >
+        <div className={styles.spinner__ring} />
+    </div>
 );
