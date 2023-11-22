@@ -5,6 +5,8 @@ import {
     Pagination,
     UsersTableHeaderCell,
     Search,
+    InfoPanel,
+    PanelTypes,
 } from '@/components';
 import type { ITableItem, ITableColumn, ITableColumnsMapping, ISortColumnParams } from '@/components';
 import { MainLayout } from "@/layouts";
@@ -38,7 +40,7 @@ export const UsersList = (): JSX.Element => {
         const userFetchUrl = buildFetchUsersLink({
             page: currentPage
         });
-        dispatch(fetchUsersCount());
+        dispatch(fetchUsersCount(''));
 		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
 
@@ -50,6 +52,7 @@ export const UsersList = (): JSX.Element => {
                 searchTerm
             });
             dispatch(fetchUsers(usersSearchUrl));
+            dispatch(fetchUsersCount(usersSearchUrl));
         }
     }, []);
     
@@ -98,7 +101,7 @@ export const UsersList = (): JSX.Element => {
                 title,
                 onRender: () => {
                     if (sortEnabledColumns.indexOf(key) === -1) {
-                        return null;
+                        return <>{title}</>;
                     }
                     const userTableHeaderCellProps = {
                         title,
@@ -143,6 +146,7 @@ export const UsersList = (): JSX.Element => {
 
     // defintion pagination component props
     const pagination = useMemo(() => {
+        console.log('usersCount: ', usersCount);
         const paginationProps = {
             currentPage,
             recordsCount: usersCount,
@@ -152,7 +156,20 @@ export const UsersList = (): JSX.Element => {
         return (
             <Pagination { ...paginationProps } />
         )
-    }, [users]);
+    }, [users, usersCount]);
+
+    // empty results
+    const emptyResults = useMemo((): JSX.Element => {
+        if (users.length > 0) {
+            return <></>;
+        }
+        return (
+            <InfoPanel
+                panelText="No users has been found"
+                panelType={PanelTypes.error}
+            />
+        )
+    }, [users, usersCount]);
     
     return (
         <MainLayout>
@@ -164,6 +181,7 @@ export const UsersList = (): JSX.Element => {
                     onSubmitSearch={onSubmitSearchHandler}
                 />
                 {usersTable}
+                {emptyResults}
                 {pagination}
             </div>
         </MainLayout>

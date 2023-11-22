@@ -57,9 +57,10 @@ export const fetchUser = createAsyncThunk('users/fetchUser', async (id: string |
     return userData;
 });
 
-export const fetchUsersCount = createAsyncThunk('users/fetchUsersCount', async () => {
+export const fetchUsersCount = createAsyncThunk('users/fetchUsersCount', async (url: string = '') => {
+    const recordsCountUrl = url || '/users';
     const usersCount = await getRecordsCount({
-        url: '/users'
+        url: recordsCountUrl
     });
     return usersCount;
 });
@@ -77,14 +78,14 @@ export const usersSlice = createSlice({
             .addCase(fetchUsers.pending, (state) => {
                 state.status = Status.loading;
             })
+            .addCase(fetchUsers.rejected, (state) => {
+                state.status = Status.failed;
+                state.error = 'api error';
+            })
             .addCase(fetchUsers.fulfilled, (state, action: PayloadAction<IUserDetails[]>) => {
                 state.status = Status.succeeded;
                 const users = action.payload;
                 state.users = users;
-            })
-            .addCase(fetchUsers.rejected, (state) => {
-                state.status = Status.failed;
-                state.error = 'api error';
             })
             .addCase(fetchUser.pending, (state) => {
                 state.status = Status.loading;

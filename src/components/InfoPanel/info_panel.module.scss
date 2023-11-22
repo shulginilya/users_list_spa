@@ -1,0 +1,18 @@
+@use '@/styles/variables' as *;
+
+.info_panel {
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: $white;
+    &__success {
+        background-color: $blue;
+    }
+    &__warning {
+        background-color: $yellow;
+    }
+    &__error {
+        background-color: $red;
+    }
+}

@@ -7,3 +7,4 @@ export * from './Footer';
 export * from './Pagination';
 export * from './UsersTableHeaderCell';
 export * from './Search';
+export * from './InfoPanel';
