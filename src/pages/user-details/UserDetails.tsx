@@ -28,11 +28,11 @@ export const UserDetails = (): JSX.Element => {
             name: 'Name',
             email: 'E-Mail',
             age: 'Age',
-            address: 'Address',
-            profilePicture: 'Profile Picture'
+            address: 'Address'
         },
         excludedFields: [
-            'id'
+            'id',
+            'profilePicture'
         ]
     }), [user]);
 
@@ -42,8 +42,11 @@ export const UserDetails = (): JSX.Element => {
             data-testid="user_details_root"
         >
             <ResourceDetails { ...userDetailsProps } />
-            <div>
+            <div
+                className={styles.user_details__cta}
+            >
                 <button
+                    className={styles.user_details__cta__btn}
                     data-testid="user_details_back_button"
                     onClick={() => navigate('/users')}
                 >go back</button>

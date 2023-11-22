@@ -19,9 +19,12 @@ export const ResourceDetails = ({
             }
             const resourceName = (fieldsMapping && fieldsMapping[eKey]) ? fieldsMapping[eKey] : eKey;
             return (
-                <div key={`${name}_${eKey}`}>
-                    <div>{resourceName}</div>
-                    <div>{entity[eKey as keyof typeof entity]}</div>
+                <div
+                    className={styles.resource_details__row}
+                    key={`${name}_${eKey}`}
+                >
+                    <div className={styles.resource_details__row__item}>{resourceName}:</div>
+                    <div className={styles.resource_details__row__item}>{entity[eKey as keyof typeof entity]}</div>
                 </div>
             );
         }).filter(k=> k !== null);

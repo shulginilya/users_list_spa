@@ -1,3 +1,12 @@
 .resource_details {
-    display: block;
+    &__row {
+        display: flex;
+        margin-bottom: 10px;
+        &__item {
+            &:first-child {
+                font-weight: bolder;
+                margin-right: 10px;
+            }
+        }
+    }
 }

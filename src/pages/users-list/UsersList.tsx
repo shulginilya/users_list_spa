@@ -45,6 +45,12 @@ export const UsersList = (): JSX.Element => {
         dispatch(fetchUsersCount());
 		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
+
+    const onSubmitSearchHandler = useCallback((searchTerm: string | undefined) => {
+        if (searchTerm) {
+            console.log('perform search');
+        }
+    }, []);
     
     const onSortHandler = useCallback(({ name, sortOrder }: ISortColumnParams) => {
         const userFetchUrl = buildFetchUsersLink({
@@ -145,7 +151,9 @@ export const UsersList = (): JSX.Element => {
                 className={styles.user_list}
                 data-testid="users_list_root"
             >
-                <Search />
+                <Search
+                    onSubmitSearch={onSubmitSearchHandler}
+                />
                 {usersTable}
                 <Pagination { ...paginationProps } />
             </div>

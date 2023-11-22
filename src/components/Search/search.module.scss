@@ -1,3 +1,33 @@
+@use '@/styles/variables' as *;
+
+@mixin active_link {
+    opacity: 1;
+}
+
 .search {
-    display: block;
+    margin-bottom: 15px;
+    &__form {
+        display: flex;
+        &__input {
+            margin-right: 10px;
+        }
+        &__btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 35px;
+            padding: 0 10px;
+            color: $white;
+            text-decoration: none;
+            background-color: $blue;
+            border-radius: 4px;
+            opacity: .5;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            &:hover {
+                @include active_link();
+            }
+        }
+    }
 }
