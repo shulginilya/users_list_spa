@@ -14,6 +14,7 @@ import {
     fetchUsersCount,
 	Status
 } from "@/appStore/reducers/usersSlice";
+import { buildFetchUsersLink } from '@/utils';
 import { useParams, useNavigate } from "react-router-dom";
 
 import styles from './user_list.module.scss';
@@ -22,7 +23,6 @@ export const UsersList = (): JSX.Element => {
     const navigate = useNavigate();
     const { page } = useParams();
     const currentPage = page ? parseInt(page, 10) : 1;
-
     /*
         Retrieve data from the users slice
     */
@@ -37,8 +37,11 @@ export const UsersList = (): JSX.Element => {
         Load users from the server
     */
     useEffect(() => {
+        const userFetchUrl = buildFetchUsersLink({
+            page: currentPage
+        });
         dispatch(fetchUsersCount());
-		dispatch(fetchUsers());
+		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
 
     const usersTable = useMemo(() => {
@@ -105,7 +108,7 @@ export const UsersList = (): JSX.Element => {
         recordsCount: usersCount,
         recordsPerPage: usersTableConfig.usersPerPage,
         url: '/users'
-    }), [usersCount]);
+    }), [usersCount, currentPage]);
     
     return (
         <MainLayout>

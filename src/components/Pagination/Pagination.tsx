@@ -29,14 +29,13 @@ export const Pagination = ({
         return pagesArray;
     }, [currentPage, recordsCount]);
     const renderPagination = useMemo((): JSX.Element => {
-        console.log('pages: ', pages, recordsCount);
         const pageItems = pages.map(p => (
             <li
                 key={`page_${p}`}
                 className={styles.pagination__list__item}
             >
                 <button
-                    className={styles.pagination__list__item__link}
+                    className={(currentPage === p) ? `${styles.pagination__list__item__link} ${styles.pagination__list__item__link_active}` : styles.pagination__list__item__link}
                     onClick={() => navigate(`${url}/${p}`)}
                 >{p}</button>
             </li>

@@ -37,9 +37,9 @@ const initialState: initialStateType = {
 /*
     Load users data from the server
 */
-export const fetchUsers = createAsyncThunk('users/fetchUsers', async () => {
+export const fetchUsers = createAsyncThunk('users/fetchUsers', async (url: string) => {
     const usersData = await makeRequest({
-        url: '/users'
+        url
     });
     return usersData;
 });

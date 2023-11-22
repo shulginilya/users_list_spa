@@ -27,6 +27,9 @@
                 &:hover {
                     @include active_link();
                 }
+                &_active {
+                    @include active_link();
+                }
             }
         }
     }
