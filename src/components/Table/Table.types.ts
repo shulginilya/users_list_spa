@@ -1,9 +1,14 @@
 export interface ITableColumn {
     key: string;
-    name: string;
-    title?: string;
-    onRender?: () => JSX.Element;
+    title: string;
+    onRender?: () => JSX.Element | null;
 };
+
+export interface ITableColumnsMapping {
+    [key: string]: {
+        title: string;
+    }
+}; 
 
 export interface ITableColumnExtra {
     title: string;

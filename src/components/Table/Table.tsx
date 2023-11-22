@@ -26,10 +26,9 @@ export const Table = ({
                 return null;
             }
             const tblHeaderKey = `${resourseName}_tbl_head_${column.key}`;
-            const tblHeaderTitle = (tableColumnsMapping[column.key] && tableColumnsMapping[column.key].title) ? tableColumnsMapping[column.key].title : column.name;
             return (
                 <th key={tblHeaderKey}>
-                    {column.onRender ? column.onRender() : tblHeaderTitle}
+                    {column.onRender ? column.onRender() : column.title}
                 </th>
             )
         }).filter(c => c !== null)

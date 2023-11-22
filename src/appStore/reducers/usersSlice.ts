@@ -20,10 +20,10 @@ export enum Status {
     failed = 'failed'
 };
 interface initialStateType {
-    users: IUserDetails[],
-    user: IUserDetails | null,
+    users: IUserDetails[];
+    user: IUserDetails | null;
     usersCount: number | null;
-    status: Status.idle | Status.loading | Status.succeeded | Status.failed,
+    status: Status.idle | Status.loading | Status.succeeded | Status.failed;
     error: string | null;
 };
 const initialState: initialStateType = {

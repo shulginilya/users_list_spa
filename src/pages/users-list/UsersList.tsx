@@ -1,10 +1,12 @@
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useAppSelector, useAppDispatch } from "@/appStore/hooks";
 import {
     Table,
     Pagination,
+    UsersTableHeaderCell,
+    Search,
 } from '@/components';
-import type { ITableItem, ITableColumn } from '@/components';
+import type { ITableItem, ITableColumn, ITableColumnsMapping, ISortColumnParams } from '@/components';
 import { MainLayout } from "@/layouts";
 import { IUserDetails } from '@/types';
 import { usersTableConfig } from '@/config';
@@ -43,6 +45,17 @@ export const UsersList = (): JSX.Element => {
         dispatch(fetchUsersCount());
 		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
+    
+    const onSortHandler = useCallback(({ name, sortOrder }: ISortColumnParams) => {
+        const userFetchUrl = buildFetchUsersLink({
+            page: currentPage,
+            sort: {
+                sortField: name,
+                sortOrder
+            }
+        });
+        dispatch(fetchUsers(userFetchUrl));
+    }, [currentPage]);
 
     const usersTable = useMemo(() => {
         if (status !== Status.succeeded) {
@@ -53,7 +66,11 @@ export const UsersList = (): JSX.Element => {
             'address',
             'profilePicture'
         ];
-        const tableColumnsMapping = {
+        const sortEnabledColumns = [
+            'name',
+            'age'
+        ];
+        const tableColumnsMapping: ITableColumnsMapping = {
             name: {
                 title: 'Name'
             },
@@ -66,15 +83,27 @@ export const UsersList = (): JSX.Element => {
         };
         const entryUser = users[0];
         const defaultTableColumns: ITableColumn[] = entryUser ? Object.keys(entryUser).map((key) => {
+            const title = (tableColumnsMapping[key] && tableColumnsMapping[key].title) ? tableColumnsMapping[key].title : key;
             return {
                 key,
-                name: key,
+                title,
+                onRender: () => {
+                    if (sortEnabledColumns.indexOf(key) === -1) {
+                        return null;
+                    }
+                    const userTableHeaderCellProps = {
+                        title,
+                        name: key,
+                        onSort: onSortHandler
+                    };
+                    return <UsersTableHeaderCell { ...userTableHeaderCellProps } />;
+                }
             }
         }) : [];
         const extraTableColumns = [
             {
                 key: 'action',
-                name: '',
+                title: '',
             }
         ];
         const tableColumns = [ ...defaultTableColumns, ...extraTableColumns];
@@ -116,6 +145,7 @@ export const UsersList = (): JSX.Element => {
                 className={styles.user_list}
                 data-testid="users_list_root"
             >
+                <Search />
                 {usersTable}
                 <Pagination { ...paginationProps } />
             </div>
