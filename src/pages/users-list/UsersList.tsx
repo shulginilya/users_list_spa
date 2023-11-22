@@ -16,7 +16,7 @@ import {
     fetchUsersCount,
 	Status
 } from "@/appStore/reducers/usersSlice";
-import { buildFetchUsersLink } from '@/utils';
+import { buildFetchUsersLink, buildSearchUsersLink } from '@/utils';
 import { useParams, useNavigate } from "react-router-dom";
 
 import styles from './user_list.module.scss';
@@ -25,9 +25,7 @@ export const UsersList = (): JSX.Element => {
     const navigate = useNavigate();
     const { page } = useParams();
     const currentPage = page ? parseInt(page, 10) : 1;
-    /*
-        Retrieve data from the users slice
-    */
+
     const dispatch = useAppDispatch();
     const {
 		users,
@@ -35,9 +33,7 @@ export const UsersList = (): JSX.Element => {
         usersCount
 	} = useAppSelector(selectData);
     
-    /*
-        Load users from the server
-    */
+    // load users from the server
     useEffect(() => {
         const userFetchUrl = buildFetchUsersLink({
             page: currentPage
@@ -46,12 +42,18 @@ export const UsersList = (): JSX.Element => {
 		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
 
+    // search form submit handler
     const onSubmitSearchHandler = useCallback((searchTerm: string | undefined) => {
         if (searchTerm) {
-            console.log('perform search');
+            const usersSearchUrl = buildSearchUsersLink({
+                field: 'name',
+                searchTerm
+            });
+            dispatch(fetchUsers(usersSearchUrl));
         }
     }, []);
     
+    // sort handler
     const onSortHandler = useCallback(({ name, sortOrder }: ISortColumnParams) => {
         const userFetchUrl = buildFetchUsersLink({
             page: currentPage,
@@ -63,6 +65,7 @@ export const UsersList = (): JSX.Element => {
         dispatch(fetchUsers(userFetchUrl));
     }, [currentPage]);
 
+    // users table builder
     const usersTable = useMemo(() => {
         if (status !== Status.succeeded) {
             return null;
@@ -138,6 +141,7 @@ export const UsersList = (): JSX.Element => {
         )
     }, [status, users]);
 
+    // defintion pagination component props
     const paginationProps = useMemo(() => ({
         currentPage,
         recordsCount: usersCount,

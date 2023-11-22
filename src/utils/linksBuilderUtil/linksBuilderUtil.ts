@@ -5,6 +5,11 @@ interface ISort {
     sortOrder: 'desc' | 'asc';
 };
 
+interface ISearch {
+    field: string;
+    searchTerm: string;
+};
+
 interface IFetchUsersLink {
     page: number;
     sort?: ISort;
@@ -12,7 +17,7 @@ interface IFetchUsersLink {
 
 export const buildFetchUsersLink = ({
     page,
-    sort
+    sort,
 }: IFetchUsersLink) => {
     const usersPerPage = usersTableConfig.usersPerPage;
     const startParam = (page - 1)*usersPerPage;
@@ -23,3 +28,10 @@ export const buildFetchUsersLink = ({
     }
     return fetchUserLink;
 };
+
+export const buildSearchUsersLink = ({
+    field,
+    searchTerm,
+}: ISearch) => (
+    `/users?${field}_like=${searchTerm}`
+);
