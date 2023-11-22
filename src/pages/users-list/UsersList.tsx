@@ -43,6 +43,15 @@ export const UsersList = (): JSX.Element => {
         dispatch(fetchUsersCount(''));
 		dispatch(fetchUsers(userFetchUrl));
 	}, [page]);
+    
+    // revert users table to init state
+    const resetUsersTable = useCallback(() => {
+        const userFetchUrl = buildFetchUsersLink({
+            page: 1
+        });
+        dispatch(fetchUsers(userFetchUrl));
+        dispatch(fetchUsersCount(''));
+    }, []);
 
     // search form submit handler
     const onSubmitSearchHandler = useCallback((searchTerm: string | undefined) => {
@@ -53,6 +62,8 @@ export const UsersList = (): JSX.Element => {
             });
             dispatch(fetchUsers(usersSearchUrl));
             dispatch(fetchUsersCount(usersSearchUrl));
+        } else {
+            resetUsersTable();
         }
     }, []);
     
@@ -146,7 +157,6 @@ export const UsersList = (): JSX.Element => {
 
     // defintion pagination component props
     const pagination = useMemo(() => {
-        console.log('usersCount: ', usersCount);
         const paginationProps = {
             currentPage,
             recordsCount: usersCount,
@@ -169,7 +179,7 @@ export const UsersList = (): JSX.Element => {
                 panelType={PanelTypes.error}
             />
         )
-    }, [users, usersCount]);
+    }, [users]);
     
     return (
         <MainLayout>
@@ -179,6 +189,7 @@ export const UsersList = (): JSX.Element => {
             >
                 <Search
                     onSubmitSearch={onSubmitSearchHandler}
+                    onResetSearch={resetUsersTable}
                 />
                 {usersTable}
                 {emptyResults}
