@@ -142,12 +142,17 @@ export const UsersList = (): JSX.Element => {
     }, [status, users]);
 
     // defintion pagination component props
-    const paginationProps = useMemo(() => ({
-        currentPage,
-        recordsCount: usersCount,
-        recordsPerPage: usersTableConfig.usersPerPage,
-        url: '/users'
-    }), [usersCount, currentPage]);
+    const pagination = useMemo(() => {
+        const paginationProps = {
+            currentPage,
+            recordsCount: usersCount,
+            recordsPerPage: usersTableConfig.usersPerPage,
+            url: '/users'
+        };
+        return (
+            <Pagination { ...paginationProps } />
+        )
+    }, [users]);
     
     return (
         <MainLayout>
@@ -159,7 +164,7 @@ export const UsersList = (): JSX.Element => {
                     onSubmitSearch={onSubmitSearchHandler}
                 />
                 {usersTable}
-                <Pagination { ...paginationProps } />
+                {pagination}
             </div>
         </MainLayout>
     )
